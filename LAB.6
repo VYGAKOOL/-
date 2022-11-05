@@ -1,0 +1,83 @@
+#include <iostream> 
+ 
+using namespace std; 
+ 
+void qs(int* s_arr, int first, int last) { 
+    if (first < last) { 
+        int left = first; 
+        int right = last; 
+        int middle = s_arr[(left + right) / 2]; 
+        cout << endl << middle << endl; 
+        do { 
+            while (s_arr[left] < middle) 
+                left++; 
+            while (s_arr[right] > middle) 
+                right--; 
+            if (left <= right) { 
+                int tmp = s_arr[left]; 
+                s_arr[left] = s_arr[right]; 
+                s_arr[right] = tmp; 
+                left++; 
+                right--; 
+            } 
+        } while (left < right); 
+        qs(s_arr, first, right); 
+        qs(s_arr, left, last); 
+    } 
+} 
+ 
+void qsrand(int* s_arr, int first, int last) { 
+    if (first < last) { 
+        int left = first; 
+        int right = last; 
+        int i = rand() % (last - first) + first;
+        int temp = s_arr[i]; 
+        s_arr[i] = s_arr[(left + right) / 2]; 
+        s_arr[(left + right) / 2] = temp; 
+        int middle = s_arr[(left + right) / 2]; 
+        cout << endl << middle << endl; 
+        do { 
+            while (s_arr[left] < middle) 
+                left++; 
+            while (s_arr[right] > middle) 
+                right--; 
+            if (left <= right) { 
+                int tmp = s_arr[left]; 
+                s_arr[left] = s_arr[right]; 
+                s_arr[right] = tmp; 
+                left++; 
+                right--; 
+            } 
+        } while (left < right); 
+        qs(s_arr, first, right); 
+        qs(s_arr, left, last); 
+    } 
+} 
+ 
+int main(void) 
+{ 
+    srand(time(NULL)); 
+    int N = 0; 
+    cout << "Enter n:"; 
+    cin >> N; 
+    int* arr = new int[N]; 
+    int* arrt = new int[N]; 
+    for (int i = 0; i < N; i++) { 
+        cout << "Enter element number " << i + 1 << endl; 
+        cin >> arr[i]; 
+        arrt[i] = arr[i]; 
+    } 
+    for (int i = 0; i < N; i++) { 
+        cout << arr[i] << " "; 
+    } 
+    qs(arr, 0, N - 1); 
+    cout << endl << "sorted arr:"; 
+    for (int i = 0; i < N; i++) { 
+        cout << arr[i] << " "; 
+    } 
+    qsrand(arrt, 0, N - 1); 
+    cout << endl << "sorted arr:"; 
+    for (int i = 0; i < N; i++) { 
+        cout << arrt[i] << " "; 
+    } 
+}
